@@ -1,8 +1,11 @@
 package tests;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 import pages.components.RegistrationResultsModal;
 import utils.RandomStudent;
+
+import static io.qameta.allure.Allure.step;
 
 public class DemoqaTest extends TestBaseExtended {
     RegistrationPage registrationPage = new RegistrationPage();
@@ -10,6 +13,7 @@ public class DemoqaTest extends TestBaseExtended {
     RandomStudent randomStudent = new RandomStudent();
 
     @Test
+    @DisplayName("Заполнение формы регистрации студента")
     void fillFormTest() {
         String
                 userFirstName = randomStudent.getRandomFirstName(),
@@ -27,33 +31,37 @@ public class DemoqaTest extends TestBaseExtended {
                 userCity = randomStudent.getRandomCity(userState);
         System.out.println(userBirthDay);
 
-        registrationPage.openPage()
-                .removeBanner()
-                .setFirstName(userFirstName)
-                .setLastName(userLastName)
-                .setEmail(userEmail)
-                .setGender(userGender)
-                .setPhone(userPhone)
-                .setBirthDate(userBirthDay, userBirthMonth, userBirthYear)
-                .setSubject(userSubject)
-                .setHobby(userHobby)
-                .uploadFile(randomStudent.getFullName())
-                .setAddress(userAddress)
-                .setState(userState)
-                .setCity(userCity)
-                .clickSubmit();
+        step("Заполняем форму регистрации", () -> {
+                    registrationPage.openPage()
+                            .removeBanner()
+                            .setFirstName(userFirstName)
+                            .setLastName(userLastName)
+                            .setEmail(userEmail)
+                            .setGender(userGender)
+                            .setPhone(userPhone)
+                            .setBirthDate(userBirthDay, userBirthMonth, userBirthYear)
+                            .setSubject(userSubject)
+                            .setHobby(userHobby)
+                            .uploadFile(randomStudent.getFullName())
+                            .setAddress(userAddress)
+                            .setState(userState)
+                            .setCity(userCity)
+                            .clickSubmit();
+                });
 
-        registrationResultsModal.verifyModalAppears()
-                .verifyResult("Student Name", userFirstName + " " + userLastName)
-                .verifyResult("Student Email", userEmail)
-                .verifyResult("Gender", userGender)
-                .verifyResult("Mobile", userPhone)
-                .verifyResult("Date of Birth", userBirthDay + " " + userBirthMonth + "," + userBirthYear)
-                .verifyResult("Subjects", userSubject)
-                .verifyResult("Hobbies", userHobby)
-                .verifyResult("Address", userAddress)
-                .verifyResult("State and City", userState + " " + userCity)
-                .verifyResult("Picture", randomStudent.getFileName());
+        step("Проверяем правильность заполнения формы", () -> {
+            registrationResultsModal.verifyModalAppears()
+                    .verifyResult("Student Name", userFirstName + " " + userLastName)
+                    .verifyResult("Student Email", userEmail)
+                    .verifyResult("Gender", userGender)
+                    .verifyResult("Mobile", userPhone)
+                    .verifyResult("Date of Birth", userBirthDay + " " + userBirthMonth + "," + userBirthYear)
+                    .verifyResult("Subjects", userSubject)
+                    .verifyResult("Hobbies", userHobby)
+                    .verifyResult("Address", userAddress)
+                    .verifyResult("State and City", userState + " " + userCity)
+                    .verifyResult("Picture", randomStudent.getFileName());
+        });
     }
 }
 
