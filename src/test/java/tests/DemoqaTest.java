@@ -4,7 +4,7 @@ import pages.RegistrationPage;
 import pages.components.RegistrationResultsModal;
 import utils.RandomStudent;
 
-public class DemoqaTest extends TestBase {
+public class DemoqaTest extends TestBaseExtended {
     RegistrationPage registrationPage = new RegistrationPage();
     private final RegistrationResultsModal registrationResultsModal = new RegistrationResultsModal();
     RandomStudent randomStudent = new RandomStudent();
