@@ -36,12 +36,18 @@ public class RandomStudent {
         SimpleDateFormat sdfMonth = new SimpleDateFormat("MMMM", Locale.ENGLISH);
         SimpleDateFormat sdfYear = new SimpleDateFormat("y", Locale.ENGLISH);
 
-        return switch (value) {
-            case "day" -> sdfDay.format(birthDay);
-            case "month" -> sdfMonth.format(birthDay);
-            case "year" -> sdfYear.format(birthDay);
-            default -> throw new IllegalArgumentException("Некорреткное значение. Укажите: day, month или year");
-        };
+        if (value.equals("day")) {
+            return sdfDay.format(birthDay);
+        }
+        else if (value.equals("month")) {
+            return sdfMonth.format(birthDay);
+        }
+        else if (value.equals("year")) {
+            return sdfYear.format(birthDay);
+        }
+        else {
+            throw new IllegalArgumentException("Некорреткное значение. Укажите: day, month или year");
+        }
     }
 
     public String getRandomSubject() {
@@ -61,13 +67,21 @@ public class RandomStudent {
     }
 
     public String getRandomCity(String state) {
-        return switch (state) {
-            case "NCR" -> faker.options().option(studentRegistrationTestData.ncrCities);
-            case "Uttar Pradesh" -> faker.options().option(studentRegistrationTestData.uttarPradeshCities);
-            case "Haryana" -> faker.options().option(studentRegistrationTestData.haryanaCities);
-            case "Rajasthan" -> faker.options().option(studentRegistrationTestData.rajasthanCities);
-            default -> throw new IllegalArgumentException("Указано некорректное наименование штата!");
-        };
+        if (state.equals("NCR")) {
+            return faker.options().option(studentRegistrationTestData.ncrCities);
+        }
+        else if (state.equals("Uttar Pradesh")) {
+            return faker.options().option(studentRegistrationTestData.uttarPradeshCities);
+        }
+        else if (state.equals("Haryana")) {
+            return faker.options().option(studentRegistrationTestData.haryanaCities);
+        }
+        else if (state.equals("Rajasthan")) {
+            return faker.options().option(studentRegistrationTestData.rajasthanCities);
+        }
+        else {
+            throw new IllegalArgumentException("Указано некорректное наименование штата!");
+        }
     }
 
     public String getFullName() {
